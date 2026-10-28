@@ -1,0 +1,14 @@
+C:\Users\melquis\documents\BibliotechC#\bin\Debug\net9.0\BibliotechC#.exe
+C:\Users\melquis\documents\BibliotechC#\bin\Debug\net9.0\BibliotechC#.deps.json
+C:\Users\melquis\documents\BibliotechC#\bin\Debug\net9.0\BibliotechC#.runtimeconfig.json
+C:\Users\melquis\documents\BibliotechC#\bin\Debug\net9.0\BibliotechC#.dll
+C:\Users\melquis\documents\BibliotechC#\bin\Debug\net9.0\BibliotechC#.pdb
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\BibliotechC#.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\BibliotechC#.AssemblyInfoInputs.cache
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\BibliotechC#.AssemblyInfo.cs
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\BibliotechC#.csproj.CoreCompileInputs.cache
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\BibliotechC#.dll
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\refint\BibliotechC#.dll
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\BibliotechC#.pdb
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\BibliotechC#.genruntimeconfig.cache
+C:\Users\melquis\documents\BibliotechC#\obj\Debug\net9.0\ref\BibliotechC#.dll
