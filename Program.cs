@@ -430,10 +430,83 @@ static void ReportSummary()
 }
 
 
-    static void ShowPersistenceMenu()
+static void ShowPersistenceMenu()
+{
+    bool back = false;
+
+    while (!back)
     {
-        ShowModuleMessage("Módulo de guardar y cargar pendiente.");
+        Console.Clear();
+
+        Console.WriteLine("======= GUARDAR / CARGAR DATOS =======");
+        Console.WriteLine("1. Guardar datos");
+        Console.WriteLine("2. Cargar datos");
+        Console.WriteLine("3. Reiniciar datos");
+        Console.WriteLine("4. Volver al menú principal");
+
+        switch (ReadOption(1, 4))
+        {
+            case 1:
+                SaveData();
+                break;
+
+            case 2:
+                LoadData();
+                break;
+
+            case 3:
+                ResetData();
+                break;
+
+            case 4:
+                back = true;
+                break;
+        }
+
+        if (!back)
+            Pause();
     }
+}
+
+static void SaveData()
+{
+    Console.WriteLine("Acción seleccionada: Guardar datos.");
+    Console.WriteLine("Simulación: los datos se guardarían en el sistema.");
+}
+
+static void LoadData()
+{
+    Console.WriteLine("Acción seleccionada: Cargar datos.");
+    Console.WriteLine("Simulación: los datos se cargarían desde el sistema.");
+}
+
+static void ResetData()
+{
+    ConfirmResetData();
+}
+
+static void ConfirmResetData()
+{
+    Console.Write("¿Estás seguro de reiniciar los datos? (S/N): ");
+
+    string answer = (Console.ReadLine() ?? "").Trim().ToUpper();
+
+    while (answer != "S" && answer != "N")
+    {
+        Console.Write("Respuesta inválida. Ingresa S o N: ");
+        answer = (Console.ReadLine() ?? "").Trim().ToUpper();
+    }
+
+    if (answer == "S")
+    {
+        Console.WriteLine("Simulación: los datos serían reiniciados.");
+    }
+    else
+    {
+        Console.WriteLine("Operación cancelada. Los datos se conservan.");
+    }
+}
+
 
     static void ShowModuleMessage(string message)
     {
@@ -477,10 +550,7 @@ static void ReportSummary()
         return answer == "N";
     }
 
-    static void SaveData()
-    {
-        Console.WriteLine("Simulación: se guardarían los datos.");
-    }
+
 
     static void Pause()
     {
