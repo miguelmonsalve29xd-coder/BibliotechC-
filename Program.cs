@@ -35,7 +35,7 @@ class Program
                 case 3: ShowLoansMenu(); break;
                 case 4: ShowSearchReportsMenu(); break;
                 case 5: ShowPersistenceMenu(); break;
-                case 6: running = ConfirmExit(); break;
+                case 6: running = ConfirmExitAndSave(); break;
             }
         }
 
@@ -533,22 +533,33 @@ static void ConfirmResetData()
         }
     }
 
-    static bool ConfirmExit()
+    static bool ConfirmExitAndSave()
+{
+    string answer;
+
+    do
     {
         Console.Write("¿Guardar antes de salir? (S/N): ");
-        string answer = (Console.ReadLine() ?? "").Trim().ToUpper();
+        answer = (Console.ReadLine() ?? "").Trim().ToUpper();
 
-        while (answer != "S" && answer != "N")
+        if (answer != "S" && answer != "N")
         {
-            Console.Write("Respuesta inválida. Ingresa S o N: ");
-            answer = (Console.ReadLine() ?? "").Trim().ToUpper();
+            Console.WriteLine("Respuesta inválida. Ingresa S o N.");
         }
 
-        if (answer == "S")
-            SaveData();
+    } while (answer != "S" && answer != "N");
 
-        return answer == "N";
+    if (answer == "S")
+    {
+        SaveData();
     }
+    else
+    {
+        Console.WriteLine("Saliendo sin guardar.");
+    }
+
+    return false;
+}
 
 
 
