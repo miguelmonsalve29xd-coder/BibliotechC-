@@ -334,10 +334,101 @@ static void DeleteLoan()
 }
 
 
-    static void ShowSearchReportsMenu()
+
+static void ShowSearchReportsMenu()
+{
+    bool back = false;
+
+    while (!back)
     {
-        ShowModuleMessage("Módulo de búsquedas y reportes pendiente.");
+        Console.Clear();
+
+        Console.WriteLine("======= BÚSQUEDAS Y REPORTES =======");
+        Console.WriteLine("1. Buscar libro");
+        Console.WriteLine("2. Buscar usuario");
+        Console.WriteLine("3. Reportes");
+        Console.WriteLine("4. Volver al menú principal");
+
+        switch (ReadOption(1, 4))
+        {
+            case 1: SearchBook(); break;
+            case 2: SearchUser(); break;
+            case 3: ReportsMenu(); break;
+            case 4: back = true; break;
+        }
+
+        if (!back)
+            Pause();
     }
+}
+
+static void SearchBook()
+{
+    Console.WriteLine("Acción seleccionada: Buscar libro.");
+    Console.WriteLine("Criterios de búsqueda:");
+    Console.WriteLine("- Título.");
+    Console.WriteLine("- Autor.");
+    Console.WriteLine("- ID.");
+    Console.WriteLine("- Categoría.");
+}
+
+static void SearchUser()
+{
+    Console.WriteLine("Acción seleccionada: Buscar usuario.");
+    Console.WriteLine("Criterios de búsqueda:");
+    Console.WriteLine("- Nombre.");
+    Console.WriteLine("- ID o documento.");
+}
+
+static void ReportsMenu()
+{
+    bool back = false;
+
+    while (!back)
+    {
+        Console.Clear();
+
+        Console.WriteLine("========== REPORTES ==========");
+        Console.WriteLine("1. Reporte por usuario");
+        Console.WriteLine("2. Reporte por libro");
+        Console.WriteLine("3. Reporte de préstamos vencidos");
+        Console.WriteLine("4. Resumen general");
+        Console.WriteLine("5. Volver");
+
+        switch (ReadOption(1, 5))
+        {
+            case 1: ReportByUser(); break;
+            case 2: ReportByBook(); break;
+            case 3: ReportOverdue(); break;
+            case 4: ReportSummary(); break;
+            case 5: back = true; break;
+        }
+
+        if (!back)
+            Pause();
+    }
+}
+
+static void ReportByUser()
+{
+    Console.WriteLine("Acción seleccionada: Generar reporte por usuario.");
+}
+
+static void ReportByBook()
+{
+    Console.WriteLine("Acción seleccionada: Generar reporte por libro.");
+}
+
+static void ReportOverdue()
+{
+    Console.WriteLine("Acción seleccionada: Generar reporte de préstamos vencidos.");
+}
+
+static void ReportSummary()
+{
+    Console.WriteLine("Acción seleccionada: Generar resumen general.");
+}
+
 
     static void ShowPersistenceMenu()
     {
