@@ -1,10 +1,87 @@
 ﻿
 using System;
-
+using BibliotecaConsola.Models;
 class Program
 {
+
+static void ProbarModelos()
+{
+    // Crear dos libros
+    Libro libro1 = new Libro(
+        1, "9788498387087", "Cien años de soledad",
+        "Gabriel García Márquez", 1967, "Novela"
+    );
+
+    Libro libro2 = new Libro(
+        2, "9786073174304", "El principito",
+        "Antoine de Saint-Exupéry", 1943, "Literatura"
+    );
+
+    // Crear dos usuarios
+    Usuario usuario1 = new Usuario(
+        1, "1018235643", "Miguel Monsalve",
+        "miguel@gmail.com", "3001234567"
+    );
+
+    Usuario usuario2 = new Usuario(
+        2, "1020304050", "Carlos Pérez",
+        "carlos@gmail.com", "3019876543"
+    );
+
+    // Crear un préstamo
+    Prestamo prestamo1 = new Prestamo(
+        1,
+        libro1,
+        usuario1,
+        DateTime.Now.AddDays(-5),
+        DateTime.Now.AddDays(10)
+    );
+
+    // RESÚMENES
+    Console.WriteLine("========== RESÚMENES ==========");
+
+    Console.WriteLine(libro1.ResumenCorto());
+    Console.WriteLine(libro2.ResumenCorto());
+
+    Console.WriteLine(usuario1.ResumenCorto());
+    Console.WriteLine(usuario2.ResumenCorto());
+
+    Console.WriteLine(prestamo1.ResumenCorto());
+
+    // DETALLES COMPLETOS
+    Console.WriteLine("\n========== DETALLES DE LIBROS ==========");
+
+    Console.WriteLine(libro1.DetalleCompleto());
+    Console.WriteLine("\n" + libro2.DetalleCompleto());
+
+    Console.WriteLine("\n========== DETALLES DE USUARIOS ==========");
+
+    Console.WriteLine(usuario1.DetalleCompleto());
+    Console.WriteLine("\n" + usuario2.DetalleCompleto());
+
+    Console.WriteLine("\n========== DETALLE DEL PRÉSTAMO ==========");
+
+    Console.WriteLine(prestamo1.DetalleCompleto());
+
+    // VALIDACIONES
+    Console.WriteLine("\n========== VALIDACIONES ==========");
+
+    Console.WriteLine($"¿Libro 1 disponible?: {libro1.Disponible}");
+    Console.WriteLine($"¿Libro 2 disponible?: {libro2.Disponible}");
+
+    Console.WriteLine($"¿Usuario 1 activo?: {usuario1.Activo}");
+    Console.WriteLine($"¿Usuario 2 activo?: {usuario2.Activo}");
+
+    Console.WriteLine($"Estado del préstamo: {prestamo1.Estado}");
+
+    Console.WriteLine($"¿Préstamo vencido?: {prestamo1.EstaVencido()}");
+
+    Console.WriteLine($"Días transcurridos: {prestamo1.DiasTranscurridos()}");
+}
+
     static void Main()
     {
+        ProbarModelos();
         ShowMainMenu();
     }
 
