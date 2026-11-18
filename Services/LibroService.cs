@@ -73,5 +73,25 @@ namespace BibliotecaConsola.Services
         {
             return libros.OrderBy(libro => libro.Anio).ToList();
         }
+
+
+        // KPI 1: Total de libros
+        public int TotalLibros()
+        {
+            return libros.Count;
+        }
+
+        // KPI 2: Libros disponibles
+        public int LibrosDisponibles()
+        {
+            return libros.Count(libro => libro.Disponible);
+        }
+
+        // KPI 3: Libros prestados
+        public int LibrosPrestados()
+        {
+            return libros.Count(libro => !libro.Disponible);
+        }
+
     }
 }

@@ -58,5 +58,25 @@ namespace BibliotecaConsola.Services
             return usuarios.OrderBy(usuario =>
                 usuario.Nombre).ToList();
         }
+
+
+        // KPI 1: Total de usuarios
+        public int TotalUsuarios()
+        {
+            return usuarios.Count;
+        }
+
+        // KPI 2: Usuarios activos
+        public int UsuariosActivos()
+        {
+            return usuarios.Count(usuario => usuario.Activo);
+        }
+
+        // KPI 3: Usuarios inactivos
+        public int UsuariosInactivos()
+        {
+            return usuarios.Count(usuario => !usuario.Activo);
+        }
+
     }
 }

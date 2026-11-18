@@ -73,5 +73,48 @@ namespace BibliotecaConsola.Services
 
             return true;
         }
+
+
+        // KPI 1: Total de préstamos
+        public int TotalPrestamos()
+        {
+            return prestamos.Count;
+        }
+
+        // KPI 2: Préstamos activos
+        public int PrestamosActivos()
+        {
+            return prestamos.Count(prestamo =>
+                prestamo.Estado == EstadoPrestamo.Activo &&
+                !prestamo.EstaVencido());
+        }
+
+        // KPI 3: Préstamos vencidos
+        public int PrestamosVencidos()
+        {
+            return prestamos.Count(prestamo =>
+                prestamo.Estado == EstadoPrestamo.Vencido ||
+                prestamo.EstaVencido());
+        }
+
+        // KPI 4: Préstamos devueltos
+        public int PrestamosDevueltos()
+        {
+            return prestamos.Count(prestamo =>
+                prestamo.Estado == EstadoPrestamo.Devuelto);
+        }
+
+        // KPI 5: Promedio de días de préstamo
+        public double PromedioDiasPrestamo()
+        {
+            if (prestamos.Count == 0)
+            {
+                return 0;
+            }
+
+            return prestamos.Average(prestamo =>
+                prestamo.DiasTranscurridos());
+        }
+
     }
 }
