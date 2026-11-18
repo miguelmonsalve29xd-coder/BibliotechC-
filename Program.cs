@@ -84,11 +84,90 @@ static void ProbarModelos()
 {
     ProbarModelos();
     ProbarLibroService();
+    ProbarUsuarioService();
 
     Console.WriteLine("\nPresiona una tecla para continuar...");
     Console.ReadKey();
 
     ShowMainMenu();
+
+
+static void ProbarUsuarioService()
+{
+    UsuarioService servicio = new UsuarioService();
+
+    // Agregar usuarios de prueba
+    servicio.AgregarUsuario(new Usuario(
+        1, "1001", "Miguel Monsalve",
+        "miguel@gmail.com", "3001234567"
+    ));
+
+    servicio.AgregarUsuario(new Usuario(
+        2, "1002", "Carlos Pérez",
+        "carlos@gmail.com", "3019876543"
+    ));
+
+    servicio.AgregarUsuario(new Usuario(
+        3, "1003", "Ana Gómez",
+        "ana@gmail.com", "3024567890"
+    ));
+
+    // Mostrar todos los usuarios
+    Console.WriteLine("\n=== TODOS LOS USUARIOS ===");
+
+    foreach (Usuario usuario in servicio.ObtenerUsuarios())
+    {
+        Console.WriteLine(usuario.ResumenCorto());
+    }
+
+    // Buscar por documento
+    Console.WriteLine("\n=== BUSCAR POR DOCUMENTO ===");
+
+    Usuario? encontrado = servicio.BuscarPorDocumento("1002");
+
+    if (encontrado != null)
+    {
+        Console.WriteLine(encontrado.ResumenCorto());
+    }
+    else
+    {
+        Console.WriteLine("Usuario no encontrado.");
+    }
+
+    // Buscar por nombre
+    Console.WriteLine("\n=== BUSCAR POR NOMBRE ===");
+
+    foreach (Usuario usuario in servicio.BuscarPorNombre("miguel"))
+    {
+        Console.WriteLine(usuario.ResumenCorto());
+    }
+
+    // Ordenar por nombre
+    Console.WriteLine("\n=== ORDENAR POR NOMBRE ===");
+
+    foreach (Usuario usuario in servicio.OrdenarPorNombre())
+    {
+        Console.WriteLine(usuario.Nombre);
+    }
+
+    // Eliminar usuario
+    Console.WriteLine("\n=== ELIMINAR USUARIO ===");
+
+    bool eliminado = servicio.EliminarUsuario("1002");
+
+    Console.WriteLine(eliminado
+        ? "Usuario eliminado correctamente."
+        : "Usuario no encontrado.");
+
+    // Mostrar usuarios restantes
+    Console.WriteLine("\n=== USUARIOS RESTANTES ===");
+
+    foreach (Usuario usuario in servicio.ObtenerUsuarios())
+    {
+        Console.WriteLine(usuario.ResumenCorto());
+    }
+}
+
 }
 
 
