@@ -85,11 +85,143 @@ static void ProbarModelos()
     ProbarModelos();
     ProbarLibroService();
     ProbarUsuarioService();
+    ProbarPrestamoService();
 
     Console.WriteLine("\nPresiona una tecla para continuar...");
     Console.ReadKey();
 
     ShowMainMenu();
+
+
+static void ProbarPrestamoService()
+{
+    PrestamoService servicio = new PrestamoService();
+
+    // Crear libros
+    Libro libro1 = new Libro(
+        1, "ISBN001", "Cien años de soledad",
+        "Gabriel García Márquez", 1967, "Novela"
+    );
+
+    Libro libro2 = new Libro(
+        2, "ISBN002", "El principito",
+        "Antoine de Saint-Exupéry", 1943, "Literatura"
+    );
+
+    Libro libro3 = new Libro(
+        3, "ISBN003", "Don Quijote de la Mancha",
+        "Miguel de Cervantes", 1605, "Novela"
+    );
+
+    // Crear usuarios
+    Usuario usuario1 = new Usuario(
+        1, "1001", "Miguel Monsalve",
+        "miguel@gmail.com", "3001234567"
+    );
+
+    Usuario usuario2 = new Usuario(
+        2, "1002", "Carlos Pérez",
+        "carlos@gmail.com", "3019876543"
+    );
+
+    // Agregar préstamos
+    servicio.AgregarPrestamo(new Prestamo(
+        1, libro1, usuario1,
+        DateTime.Today.AddDays(-10),
+        DateTime.Today.AddDays(5)
+    ));
+
+    servicio.AgregarPrestamo(new Prestamo(
+        2, libro2, usuario2,
+        DateTime.Today.AddDays(-20),
+        DateTime.Today.AddDays(-5),
+        null,
+        EstadoPrestamo.Vencido
+    ));
+
+    servicio.AgregarPrestamo(new Prestamo(
+        3, libro3, usuario1,
+        DateTime.Today.AddDays(-7),
+        DateTime.Today.AddDays(8)
+    ));
+
+    // Mostrar todos
+    Console.WriteLine("\n=== TODOS LOS PRÉSTAMOS ===");
+
+    foreach (Prestamo prestamo in servicio.ObtenerPrestamos())
+    {
+        Console.WriteLine(prestamo.ResumenCorto());
+    }
+
+    // Buscar por ID
+    Console.WriteLine("\n=== BUSCAR POR ID ===");
+
+    Prestamo? encontrado = servicio.BuscarPorId(2);
+
+    if (encontrado != null)
+    {
+        Console.WriteLine(encontrado.ResumenCorto());
+    }
+
+    // Buscar activos
+    Console.WriteLine("\n=== PRÉSTAMOS ACTIVOS ===");
+
+    foreach (Prestamo prestamo in
+        servicio.BuscarPorEstado(EstadoPrestamo.Activo))
+    {
+        Console.WriteLine(prestamo.ResumenCorto());
+    }
+
+    // Buscar vencidos
+    Console.WriteLine("\n=== PRÉSTAMOS VENCIDOS ===");
+
+    foreach (Prestamo prestamo in
+        servicio.BuscarPorEstado(EstadoPrestamo.Vencido))
+    {
+        Console.WriteLine(prestamo.ResumenCorto());
+    }
+
+    // Ordenar por fecha límite
+    Console.WriteLine("\n=== ORDENAR POR FECHA LÍMITE ===");
+
+    foreach (Prestamo prestamo in
+        servicio.OrdenarPorFechaVencimiento())
+    {
+        Console.WriteLine(
+            $"{prestamo.FechaVencimiento:dd/MM/yyyy} - " +
+            $"{prestamo.Libro.Titulo}"
+        );
+    }
+
+    // Registrar devolución
+    Console.WriteLine("\n=== REGISTRAR DEVOLUCIÓN ===");
+
+    bool devuelto = servicio.RegistrarDevolucion(1);
+
+    Console.WriteLine(devuelto
+        ? "Préstamo devuelto correctamente."
+        : "No se pudo registrar la devolución.");
+
+    Console.WriteLine($"¿Libro disponible?: {libro1.Disponible}");
+
+    // Eliminar préstamo
+    Console.WriteLine("\n=== ELIMINAR PRÉSTAMO ===");
+
+    bool eliminado = servicio.EliminarPrestamo(3);
+
+    Console.WriteLine(eliminado
+        ? "Préstamo eliminado correctamente."
+        : "Préstamo no encontrado.");
+
+    // Mostrar restantes
+    Console.WriteLine("\n=== PRÉSTAMOS RESTANTES ===");
+
+    foreach (Prestamo prestamo in servicio.ObtenerPrestamos())
+    {
+        Console.WriteLine(prestamo.ResumenCorto());
+    }
+}
+
 
 
 static void ProbarUsuarioService()
