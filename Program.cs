@@ -1,6 +1,7 @@
 ﻿
 using System;
 using BibliotecaConsola.Models;
+using BibliotecaConsola.Services;
 class Program
 {
 
@@ -80,10 +81,105 @@ static void ProbarModelos()
 }
 
     static void Main()
+{
+    ProbarModelos();
+    ProbarLibroService();
+
+    Console.WriteLine("\nPresiona una tecla para continuar...");
+    Console.ReadKey();
+
+    ShowMainMenu();
+}
+
+
+static void ProbarLibroService()
+{
+    LibroService servicio = new LibroService();
+
+    // Agregar tres libros
+    servicio.AgregarLibro(new Libro(
+        1, "ISBN001", "Cien años de soledad",
+        "Gabriel García Márquez", 1967, "Novela"
+    ));
+
+    servicio.AgregarLibro(new Libro(
+        2, "ISBN002", "El principito",
+        "Antoine de Saint-Exupéry", 1943, "Literatura"
+    ));
+
+    servicio.AgregarLibro(new Libro(
+        3, "ISBN003", "Don Quijote de la Mancha",
+        "Miguel de Cervantes", 1605, "Novela"
+    ));
+
+    // Mostrar libros
+    Console.WriteLine("\n=== TODOS LOS LIBROS ===");
+
+    foreach (Libro libro in servicio.ObtenerLibros())
     {
-        ProbarModelos();
-        ShowMainMenu();
+        Console.WriteLine(libro.ResumenCorto());
     }
+
+    // Buscar por ISBN
+    Console.WriteLine("\n=== BUSCAR POR ISBN ===");
+
+    Libro? encontrado = servicio.BuscarPorISBN("ISBN002");
+
+    if (encontrado != null)
+    {
+        Console.WriteLine(encontrado.ResumenCorto());
+    }
+
+    // Buscar por título
+    Console.WriteLine("\n=== BUSCAR POR TÍTULO ===");
+
+    foreach (Libro libro in servicio.BuscarPorTitulo("soledad"))
+    {
+        Console.WriteLine(libro.ResumenCorto());
+    }
+
+    // Buscar por autor
+    Console.WriteLine("\n=== BUSCAR POR AUTOR ===");
+
+    foreach (Libro libro in servicio.BuscarPorAutor("Cervantes"))
+    {
+        Console.WriteLine(libro.ResumenCorto());
+    }
+
+    // Ordenar por título
+    Console.WriteLine("\n=== ORDENAR POR TÍTULO ===");
+
+    foreach (Libro libro in servicio.OrdenarPorTitulo())
+    {
+        Console.WriteLine(libro.Titulo);
+    }
+
+    // Ordenar por año
+    Console.WriteLine("\n=== ORDENAR POR AÑO ===");
+
+    foreach (Libro libro in servicio.OrdenarPorAnio())
+    {
+        Console.WriteLine($"{libro.Anio} - {libro.Titulo}");
+    }
+
+    // Eliminar libro
+    Console.WriteLine("\n=== ELIMINAR LIBRO ===");
+
+    bool eliminado = servicio.EliminarLibro("ISBN002");
+
+    Console.WriteLine(eliminado
+        ? "Libro eliminado correctamente."
+        : "Libro no encontrado.");
+
+    // Mostrar libros restantes
+    Console.WriteLine("\n=== LIBROS RESTANTES ===");
+
+    foreach (Libro libro in servicio.ObtenerLibros())
+    {
+        Console.WriteLine(libro.ResumenCorto());
+    }
+}
+
 
     static void ShowMainMenu()
     {
