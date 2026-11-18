@@ -86,11 +86,107 @@ static void ProbarModelos()
     ProbarLibroService();
     ProbarUsuarioService();
     ProbarPrestamoService();
+    ProbarKPIs();
 
     Console.WriteLine("\nPresiona una tecla para continuar...");
     Console.ReadKey();
 
     ShowMainMenu();
+
+
+static void ProbarKPIs()
+{
+    Console.WriteLine("\n========== KPIs DE BIBLIOTECA ==========");
+
+    // Crear servicios
+    LibroService libroService = new LibroService();
+    UsuarioService usuarioService = new UsuarioService();
+    PrestamoService prestamoService = new PrestamoService();
+
+    // Crear libros
+    Libro libro1 = new Libro(
+        1, "ISBN001", "Cien años de soledad",
+        "Gabriel García Márquez", 1967, "Novela", false
+    );
+
+    Libro libro2 = new Libro(
+        2, "ISBN002", "El principito",
+        "Antoine de Saint-Exupéry", 1943, "Literatura", true
+    );
+
+    Libro libro3 = new Libro(
+        3, "ISBN003", "Don Quijote",
+        "Miguel de Cervantes", 1605, "Novela", false
+    );
+
+    libroService.AgregarLibro(libro1);
+    libroService.AgregarLibro(libro2);
+    libroService.AgregarLibro(libro3);
+
+    // Crear usuarios
+    Usuario usuario1 = new Usuario(
+        1, "1001", "Miguel Monsalve",
+        "miguel@gmail.com", "3001234567", true
+    );
+
+    Usuario usuario2 = new Usuario(
+        2, "1002", "Carlos Pérez",
+        "carlos@gmail.com", "3019876543", false
+    );
+
+    Usuario usuario3 = new Usuario(
+        3, "1003", "Ana Gómez",
+        "ana@gmail.com", "3024567890", true
+    );
+
+    usuarioService.AgregarUsuario(usuario1);
+    usuarioService.AgregarUsuario(usuario2);
+    usuarioService.AgregarUsuario(usuario3);
+
+    // Crear préstamos
+    prestamoService.AgregarPrestamo(new Prestamo(
+        1, libro1, usuario1,
+        DateTime.Today.AddDays(-5),
+        DateTime.Today.AddDays(10)
+    ));
+
+    prestamoService.AgregarPrestamo(new Prestamo(
+        2, libro3, usuario3,
+        DateTime.Today.AddDays(-20),
+        DateTime.Today.AddDays(-5),
+        null,
+        EstadoPrestamo.Vencido
+    ));
+
+    prestamoService.AgregarPrestamo(new Prestamo(
+        3, libro2, usuario1,
+        DateTime.Today.AddDays(-12),
+        DateTime.Today.AddDays(-2),
+        DateTime.Today.AddDays(-4),
+        EstadoPrestamo.Devuelto
+    ));
+
+    // KPIs de libros
+    Console.WriteLine("\n=== ESTADÍSTICAS DE LIBROS ===");
+    Console.WriteLine($"Total de libros: {libroService.TotalLibros()}");
+    Console.WriteLine($"Libros disponibles: {libroService.LibrosDisponibles()}");
+    Console.WriteLine($"Libros prestados: {libroService.LibrosPrestados()}");
+
+    // KPIs de usuarios
+    Console.WriteLine("\n=== ESTADÍSTICAS DE USUARIOS ===");
+    Console.WriteLine($"Total de usuarios: {usuarioService.TotalUsuarios()}");
+    Console.WriteLine($"Usuarios activos: {usuarioService.UsuariosActivos()}");
+    Console.WriteLine($"Usuarios inactivos: {usuarioService.UsuariosInactivos()}");
+
+    // KPIs de préstamos
+    Console.WriteLine("\n=== ESTADÍSTICAS DE PRÉSTAMOS ===");
+    Console.WriteLine($"Total de préstamos: {prestamoService.TotalPrestamos()}");
+    Console.WriteLine($"Préstamos activos: {prestamoService.PrestamosActivos()}");
+    Console.WriteLine($"Préstamos vencidos: {prestamoService.PrestamosVencidos()}");
+    Console.WriteLine($"Préstamos devueltos: {prestamoService.PrestamosDevueltos()}");
+    Console.WriteLine($"Promedio de días: {prestamoService.PromedioDiasPrestamo():F2}");
+}
+
 
 
 static void ProbarPrestamoService()
