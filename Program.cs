@@ -2,6 +2,7 @@
 using System;
 using BibliotecaConsola.Models;
 using BibliotecaConsola.Services;
+using System.Collections.Generic;
 class Program
 {
 
@@ -87,11 +88,53 @@ static void ProbarModelos()
     ProbarUsuarioService();
     ProbarPrestamoService();
     ProbarKPIs();
+    CompararArrayYList();
 
     Console.WriteLine("\nPresiona una tecla para continuar...");
     Console.ReadKey();
 
     ShowMainMenu();
+
+    static void CompararArrayYList()
+{
+    // ARRAY: tamaño fijo
+    string[] librosArray = new string[3];
+
+    librosArray[0] = "El principito";
+    librosArray[1] = "Don Quijote";
+    librosArray[2] = "La Odisea";
+
+    Console.WriteLine("=== ARRAY ===");
+
+    foreach (string libro in librosArray)
+    {
+        Console.WriteLine(libro);
+    }
+
+    Console.WriteLine($"Tamaño: {librosArray.Length}");
+
+    // LIST: tamaño dinámico
+    List<string> librosList = new List<string>();
+
+    librosList.Add("El principito");
+    librosList.Add("Don Quijote");
+    librosList.Add("La Odisea");
+
+    // Agregar un cuarto libro
+    librosList.Add("Cien años de soledad");
+
+    // Eliminar un libro
+    librosList.Remove("Don Quijote");
+
+    Console.WriteLine("\n=== LIST ===");
+
+    foreach (string libro in librosList)
+    {
+        Console.WriteLine(libro);
+    }
+
+    Console.WriteLine($"Cantidad: {librosList.Count}");
+}
 
 
 static void ProbarKPIs()
